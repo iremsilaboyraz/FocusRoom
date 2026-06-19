@@ -512,11 +512,13 @@ h1, h2, h3, h4, h5, h6 {
    MOBILE RESPONSIVE (≤ 768px)
    ============================ */
 
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px), (max-height: 550px) {
   .email-rest {
     display: none !important;
   }
+}
 
+@media (max-width: 768px) and (orientation: portrait) {
   /* ── Toolbar Dock → Bottom Horizontal Bar ── */
   .toolbar-dock {
     position: fixed !important;
@@ -944,10 +946,6 @@ h1, h2, h3, h4, h5, h6 {
    LANDSCAPE MOBILE OPTIMIZATIONS (height ≤ 550px)
    =================================================== */
 @media (max-height: 550px) {
-  .email-rest {
-    display: none !important;
-  }
-
   /* ── Page Wrapper & Layout ── */
   .hp-wrapper {
     height: 100vh !important;
