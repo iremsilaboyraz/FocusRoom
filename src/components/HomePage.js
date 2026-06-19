@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, TrendingUp, LogOut } from 'lucide-react';
 
 /* ─────────────────────────────────────
    MAP LOCATIONS
@@ -141,12 +141,13 @@ function HomePage({
             <div className="hp-user-bar" style={styles.userBar}>
                 <button 
                     onClick={onViewHistory}
-                    className="pulse-hover"
+                    className="pulse-hover hp-history-btn"
                     style={styles.historyBtn}
                 >
-                    Odak Geçmişim 📊
+                    <TrendingUp size={16} />
+                    <span className="btn-text">Odak Geçmişim</span>
                 </button>
-                <div style={styles.userInfoPill}>
+                <div className="hp-user-info-pill" style={styles.userInfoPill}>
                     <span style={{ fontSize: '14px' }}>👤</span>
                     <span style={styles.userEmail} title={user?.email}>
                         {user?.email ? (user.email.length > 20 ? user.email.substring(0, 17) + '...' : user.email) : 'Misafir'}
@@ -154,10 +155,11 @@ function HomePage({
                 </div>
                 <button 
                     onClick={onSignOut}
-                    className="pulse-hover"
+                    className="pulse-hover hp-signout-btn"
                     style={styles.signOutBtn}
                 >
-                    Çıkış Yap 🚪
+                    <LogOut size={16} />
+                    <span className="btn-text">Çıkış Yap</span>
                 </button>
             </div>
 
@@ -172,242 +174,245 @@ function HomePage({
                 </p>
             </header>
 
-            {/* ── MAP CONTAINER ── */}
-            <div ref={mapRef} className="hp-map-container" style={styles.mapContainer}>
+            {/* ── MAP SCROLL WRAPPER (Mobile scroll / Desktop full width) ── */}
+            <div className="hp-map-scroll-wrapper">
+                {/* ── MAP CONTAINER ── */}
+                <div ref={mapRef} className="hp-map-container" style={styles.mapContainer}>
 
-                {/* Fog layers */}
-                <div style={styles.fogLayer1} />
-                <div style={styles.fogLayer2} />
+                    {/* Fog layers */}
+                    <div style={styles.fogLayer1} />
+                    <div style={styles.fogLayer2} />
 
-                {/* Floating clouds */}
-                {CLOUDS.map((c, i) => (
-                    <div key={`cloud-${i}`} style={{
-                        position: 'absolute',
-                        top: c.top,
-                        left: '-120px',
-                        fontSize: `${c.size}px`,
-                        animation: `float-cloud ${c.duration}s ${c.delay}s linear infinite`,
-                        opacity: c.opacity,
-                        zIndex: 1,
-                        pointerEvents: 'none',
-                        filter: 'brightness(1.2)',
-                    }}>☁️</div>
-                ))}
-
-                {/* Decorative terrain emoji */}
-                {MAP_DECORATIONS.map((d, i) => (
-                    <div key={`deco-${i}`} style={{
-                        position: 'absolute',
-                        left: `${d.x}%`,
-                        top: `${d.y}%`,
-                        fontSize: `${d.size}px`,
-                        opacity: 0.75,
-                        pointerEvents: 'none',
-                        zIndex: 1,
-                        animation: d.emoji === '⭐' || d.emoji === '🦋'
-                            ? `twinkle ${2 + d.delay}s ${d.delay}s ease-in-out infinite`
-                            : `char-idle ${4 + d.delay * 0.5}s ${d.delay}s ease-in-out infinite`,
-                        transition: 'opacity 0.3s',
-                    }}>{d.emoji}</div>
-                ))}
-
-                {/* SVG Paths (roads between locations) */}
-                <svg
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="none"
-                    style={styles.pathSvg}
-                >
-                    {MAP_PATHS.map((p, i) => (
-                        <path
-                            key={`path-${i}`}
-                            d={p.d}
-                            fill="none"
-                            stroke="rgba(94, 114, 228, 0.25)"
-                            strokeWidth="0.4"
-                            strokeDasharray="1.5 1"
-                            style={{
-                                animation: 'dash-flow 2s linear infinite',
-                            }}
-                        />
+                    {/* Floating clouds */}
+                    {CLOUDS.map((c, i) => (
+                        <div key={`cloud-${i}`} style={{
+                            position: 'absolute',
+                            top: c.top,
+                            left: '-120px',
+                            fontSize: `${c.size}px`,
+                            animation: `float-cloud ${c.duration}s ${c.delay}s linear infinite`,
+                            opacity: c.opacity,
+                            zIndex: 1,
+                            pointerEvents: 'none',
+                            filter: 'brightness(1.2)',
+                        }}>☁️</div>
                     ))}
-                    {/* Highlighted path to hovered location */}
-                    {hoveredId && MAP_PATHS.filter(p => p.from === hoveredId || p.to === hoveredId).map((p, i) => (
-                        <path
-                            key={`path-active-${i}`}
-                            d={p.d}
-                            fill="none"
-                            stroke={hoveredLoc?.color || '#8b5cf6'}
-                            strokeWidth="0.5"
-                            strokeDasharray="2 1"
-                            strokeOpacity={0.6}
-                            style={{
-                                animation: 'dash-flow 1s linear infinite',
-                                filter: `drop-shadow(0 0 3px ${hoveredLoc?.color || '#8b5cf6'})`,
-                            }}
-                        />
+
+                    {/* Decorative terrain emoji */}
+                    {MAP_DECORATIONS.map((d, i) => (
+                        <div key={`deco-${i}`} style={{
+                            position: 'absolute',
+                            left: `${d.x}%`,
+                            top: `${d.y}%`,
+                            fontSize: `${d.size}px`,
+                            opacity: 0.75,
+                            pointerEvents: 'none',
+                            zIndex: 1,
+                            animation: d.emoji === '⭐' || d.emoji === '🦋'
+                                ? `twinkle ${2 + d.delay}s ${d.delay}s ease-in-out infinite`
+                                : `char-idle ${4 + d.delay * 0.5}s ${d.delay}s ease-in-out infinite`,
+                            transition: 'opacity 0.3s',
+                        }}>{d.emoji}</div>
                     ))}
-                </svg>
 
-                {/* ── MAP LOCATION PINS ── */}
-                {MAP_LOCATIONS.map((loc) => {
-                    const isHovered = hoveredId === loc.id;
-                    return (
-                        <div
-                            key={loc.id}
-                            style={{
-                                position: 'absolute',
-                                left: `${loc.x}%`,
-                                top: `${loc.y}%`,
-                                transform: 'translate(-50%, -50%)',
-                                zIndex: isHovered ? 20 : 10,
-                                cursor: 'pointer',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: '6px',
-                            }}
-                            onMouseEnter={() => setHoveredId(loc.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                            onClick={() => setSetupEnv(loc.id)}
-                        >
-                            {/* Pulsing ground glow */}
-                            <div style={{
-                                position: 'absolute',
-                                bottom: '-12px',
-                                width: isHovered ? '70px' : '45px',
-                                height: isHovered ? '20px' : '12px',
-                                borderRadius: '50%',
-                                background: `radial-gradient(ellipse, ${loc.glowColor} 0%, transparent 70%)`,
-                                transition: 'all 0.4s ease',
-                                animation: isHovered ? 'glow-pulse 1.5s ease-in-out infinite' : 'none',
-                                color: loc.color,
-                            }} />
+                    {/* SVG Paths (roads between locations) */}
+                    <svg
+                        viewBox="0 0 100 100"
+                        preserveAspectRatio="none"
+                        style={styles.pathSvg}
+                    >
+                        {MAP_PATHS.map((p, i) => (
+                            <path
+                                key={`path-${i}`}
+                                d={p.d}
+                                fill="none"
+                                stroke="rgba(94, 114, 228, 0.25)"
+                                strokeWidth="0.4"
+                                strokeDasharray="1.5 1"
+                                style={{
+                                    animation: 'dash-flow 2s linear infinite',
+                                }}
+                            />
+                        ))}
+                        {/* Highlighted path to hovered location */}
+                        {hoveredId && MAP_PATHS.filter(p => p.from === hoveredId || p.to === hoveredId).map((p, i) => (
+                            <path
+                                key={`path-active-${i}`}
+                                d={p.d}
+                                fill="none"
+                                stroke={hoveredLoc?.color || '#8b5cf6'}
+                                strokeWidth="0.5"
+                                strokeDasharray="2 1"
+                                strokeOpacity={0.6}
+                                style={{
+                                    animation: 'dash-flow 1s linear infinite',
+                                    filter: `drop-shadow(0 0 3px ${hoveredLoc?.color || '#8b5cf6'})`,
+                                }}
+                            />
+                        ))}
+                    </svg>
 
-                            {/* Pin circle */}
-                            <div style={{
-                                width: isHovered ? '68px' : '56px',
-                                height: isHovered ? '56px' : '56px',
-                                borderRadius: '50%',
-                                background: isHovered
-                                    ? `radial-gradient(circle at 35% 35%, ${loc.color}, ${loc.color}cc)`
-                                    : `radial-gradient(circle at 35% 35%, ${loc.color}22, ${loc.color}11)`,
-                                border: `3px solid ${isHovered ? loc.color : loc.color + '77'}`,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: isHovered ? '30px' : '26px',
-                                transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                animation: isHovered ? 'pin-bounce 1s ease-in-out infinite' : 'none',
-                                boxShadow: isHovered
-                                    ? `0 0 25px ${loc.glowColor}, 0 8px 30px rgba(0,0,0,0.1)`
-                                    : `0 4px 15px rgba(0,0,0,0.05)`,
-                                backdropFilter: 'blur(8px)',
-                            }}>
-                                {loc.emoji}
-                            </div>
-
-                            {/* Location name label */}
-                            <div style={{
-                                background: isHovered
-                                    ? `linear-gradient(135deg, ${loc.color}, ${loc.color}dd)`
-                                    : 'rgba(255, 255, 255, 0.9)',
-                                padding: isHovered ? '6px 16px' : '4px 12px',
-                                borderRadius: '12px',
-                                fontSize: isHovered ? '14px' : '12px',
-                                fontWeight: '700',
-                                color: isHovered ? '#ffffff' : '#1e293b',
-                                whiteSpace: 'nowrap',
-                                transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                border: `1px solid ${isHovered ? loc.color : 'rgba(0,0,0,0.06)'}`,
-                                backdropFilter: 'blur(8px)',
-                                letterSpacing: '0.02em',
-                                boxShadow: isHovered ? `0 4px 15px ${loc.glowColor}` : '0 2px 8px rgba(0,0,0,0.05)',
-                            }}>
-                                {loc.name}
-                            </div>
-
-                            {/* Terrain subtitle */}
-                            <div style={{
-                                fontSize: '10px',
-                                color: loc.color,
-                                fontWeight: '600',
-                                opacity: isHovered ? 1 : 0.7,
-                                transition: 'opacity 0.3s',
-                                letterSpacing: '0.08em',
-                                textTransform: 'uppercase',
-                            }}>
-                                {loc.terrain}
-                            </div>
-
-                            {/* Expanded tooltip on hover */}
-                            {isHovered && (
+                    {/* ── MAP LOCATION PINS ── */}
+                    {MAP_LOCATIONS.map((loc) => {
+                        const isHovered = hoveredId === loc.id;
+                        return (
+                            <div
+                                key={loc.id}
+                                style={{
+                                    position: 'absolute',
+                                    left: `${loc.x}%`,
+                                    top: `${loc.y}%`,
+                                    transform: 'translate(-50%, -50%)',
+                                    zIndex: isHovered ? 20 : 10,
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                }}
+                                onMouseEnter={() => setHoveredId(loc.id)}
+                                onMouseLeave={() => setHoveredId(null)}
+                                onClick={() => setSetupEnv(loc.id)}
+                            >
+                                {/* Pulsing ground glow */}
                                 <div style={{
                                     position: 'absolute',
-                                    bottom: loc.y > 50 ? '115%' : 'auto',
-                                    top: loc.y > 50 ? 'auto' : '115%',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
-                                    background: 'rgba(255, 255, 255, 0.95)',
-                                    backdropFilter: 'blur(16px)',
-                                    border: `1px solid ${loc.color}66`,
-                                    borderRadius: '16px',
-                                    padding: '16px 20px',
-                                    width: '220px',
-                                    animation: 'tooltip-in 0.3s ease-out forwards',
-                                    boxShadow: `0 12px 40px rgba(0,0,0,0.06), 0 0 20px ${loc.glowColor}`,
-                                    zIndex: 30,
+                                    bottom: '-12px',
+                                    width: isHovered ? '70px' : '45px',
+                                    height: isHovered ? '20px' : '12px',
+                                    borderRadius: '50%',
+                                    background: `radial-gradient(ellipse, ${loc.glowColor} 0%, transparent 70%)`,
+                                    transition: 'all 0.4s ease',
+                                    animation: isHovered ? 'glow-pulse 1.5s ease-in-out infinite' : 'none',
+                                    color: loc.color,
+                                }} />
+
+                                {/* Pin circle */}
+                                <div style={{
+                                    width: isHovered ? '68px' : '56px',
+                                    height: isHovered ? '56px' : '56px',
+                                    borderRadius: '50%',
+                                    background: isHovered
+                                        ? `radial-gradient(circle at 35% 35%, ${loc.color}, ${loc.color}cc)`
+                                        : `radial-gradient(circle at 35% 35%, ${loc.color}22, ${loc.color}11)`,
+                                    border: `3px solid ${isHovered ? loc.color : loc.color + '77'}`,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: isHovered ? '30px' : '26px',
+                                    transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                    animation: isHovered ? 'pin-bounce 1s ease-in-out infinite' : 'none',
+                                    boxShadow: isHovered
+                                        ? `0 0 25px ${loc.glowColor}, 0 8px 30px rgba(0,0,0,0.1)`
+                                        : `0 4px 15px rgba(0,0,0,0.05)`,
+                                    backdropFilter: 'blur(8px)',
                                 }}>
-                                    <p style={{
-                                        fontSize: '13px',
-                                        color: '#475569',
-                                        lineHeight: '1.5',
-                                        marginBottom: '12px',
-                                    }}>
-                                        {loc.description}
-                                    </p>
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '6px',
-                                        fontSize: '13px',
-                                        fontWeight: '700',
-                                        color: loc.color,
-                                    }}>
-                                        <span>⚡ Seansı Yapılandır</span>
-                                    </div>
+                                    {loc.emoji}
                                 </div>
-                            )}
-                        </div>
-                    );
-                })}
 
-                {/* ── WANDERING CHARACTER ── */}
-                <div style={{
-                    position: 'absolute',
-                    left: `${characterPos.x}%`,
-                    top: `${characterPos.y}%`,
-                    fontSize: '28px',
-                    transition: isMoving ? 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'all 2s ease',
-                    animation: 'char-idle 2.5s ease-in-out infinite',
-                    zIndex: 15,
-                    pointerEvents: 'none',
-                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
-                }}>
-                    🧑‍💻
-                </div>
+                                {/* Location name label */}
+                                <div style={{
+                                    background: isHovered
+                                        ? `linear-gradient(135deg, ${loc.color}, ${loc.color}dd)`
+                                        : 'rgba(255, 255, 255, 0.9)',
+                                    padding: isHovered ? '6px 16px' : '4px 12px',
+                                    borderRadius: '12px',
+                                    fontSize: isHovered ? '14px' : '12px',
+                                    fontWeight: '700',
+                                    color: isHovered ? '#ffffff' : '#1e293b',
+                                    whiteSpace: 'nowrap',
+                                    transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                    border: `1px solid ${isHovered ? loc.color : 'rgba(0,0,0,0.06)'}`,
+                                    backdropFilter: 'blur(8px)',
+                                    letterSpacing: '0.02em',
+                                    boxShadow: isHovered ? `0 4px 15px ${loc.glowColor}` : '0 2px 8px rgba(0,0,0,0.05)',
+                                }}>
+                                    {loc.name}
+                                </div>
 
-                {/* Map legend / compass */}
-                <div style={styles.compassBox}>
-                    <div style={{ fontSize: '28px', animation: 'char-idle 3s ease-in-out infinite' }}>🧭</div>
-                    <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '600', letterSpacing: '0.1em' }}>
-                        ODAK HARİTASI
-                    </span>
+                                {/* Terrain subtitle */}
+                                <div style={{
+                                    fontSize: '10px',
+                                    color: loc.color,
+                                    fontWeight: '600',
+                                    opacity: isHovered ? 1 : 0.7,
+                                    transition: 'opacity 0.3s',
+                                    letterSpacing: '0.08em',
+                                    textTransform: 'uppercase',
+                                 }}>
+                                    {loc.terrain}
+                                </div>
+
+                                {/* Expanded tooltip on hover */}
+                                {isHovered && (
+                                    <div style={{
+                                        position: 'absolute',
+                                        bottom: loc.y > 50 ? '115%' : 'auto',
+                                        top: loc.y > 50 ? 'auto' : '115%',
+                                        left: '50%',
+                                        transform: 'translateX(-50%)',
+                                        background: 'rgba(255, 255, 255, 0.95)',
+                                        backdropFilter: 'blur(16px)',
+                                        border: `1px solid ${loc.color}66`,
+                                        borderRadius: '16px',
+                                        padding: '16px 20px',
+                                        width: '220px',
+                                        animation: 'tooltip-in 0.3s ease-out forwards',
+                                        boxShadow: `0 12px 40px rgba(0,0,0,0.06), 0 0 20px ${loc.glowColor}`,
+                                        zIndex: 30,
+                                    }}>
+                                        <p style={{
+                                            fontSize: '13px',
+                                            color: '#475569',
+                                            lineHeight: '1.5',
+                                            marginBottom: '12px',
+                                        }}>
+                                            {loc.description}
+                                        </p>
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px',
+                                            fontSize: '13px',
+                                            fontWeight: '700',
+                                            color: loc.color,
+                                        }}>
+                                            <span>⚡ Seansı Yapılandır</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+
+                    {/* ── WANDERING CHARACTER ── */}
+                    <div style={{
+                        position: 'absolute',
+                        left: `${characterPos.x}%`,
+                        top: `${characterPos.y}%`,
+                        fontSize: '28px',
+                        transition: isMoving ? 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)' : 'all 2s ease',
+                        animation: 'char-idle 2.5s ease-in-out infinite',
+                        zIndex: 15,
+                        pointerEvents: 'none',
+                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.15))',
+                    }}>
+                        🧑‍💻
+                    </div>
+
+                    {/* Map legend / compass */}
+                    <div style={styles.compassBox}>
+                        <div style={{ fontSize: '28px', animation: 'char-idle 3s ease-in-out infinite' }}>🧭</div>
+                        <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '600', letterSpacing: '0.1em' }}>
+                            ODAK HARİTASI
+                        </span>
+                    </div>
                 </div>
             </div>
 
             {/* ── AI MOOD BAR (compact, below map) ── */}
             <div className="hp-mood-bar" style={styles.moodBar}>
-                <div style={styles.moodBarInner}>
+                <div className="hp-mood-bar-inner" style={styles.moodBarInner}>
                     <Sparkles size={18} style={{ color: '#8b5cf6', flexShrink: 0 }} />
                     <form onSubmit={handleMoodSubmit} style={styles.moodForm}>
                         <input
@@ -435,7 +440,7 @@ function HomePage({
             {/* ── SETUP MODAL OVERLAY ── */}
             {setupEnv && (
                 <div style={styles.modalOverlay}>
-                    <div className="glass-panel" style={styles.modalContent}>
+                    <div className="glass-panel hp-modal-content" style={styles.modalContent}>
                         {/* Modal header with close button */}
                         <div style={styles.modalHeader}>
                             <h2 style={styles.modalTitle}>
@@ -544,22 +549,16 @@ const styles = {
     header: {
         position: 'absolute',
         top: '32px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        textAlign: 'center',
+        left: '32px',
+        transform: 'none',
+        textAlign: 'left',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         gap: '4px',
-        background: 'rgba(255, 255, 255, 0.8)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        borderRadius: '20px',
-        padding: '12px 28px',
+        padding: '0',
         zIndex: 30,
-        pointerEvents: 'auto',
-        boxShadow: '0 8px 32px rgba(120, 110, 90, 0.08)',
+        pointerEvents: 'none',
     },
     title: {
         fontSize: '1.8rem',

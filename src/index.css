@@ -494,6 +494,13 @@ h1, h2, h3, h4, h5, h6 {
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* HP Map Scroll Wrapper */
+.hp-map-scroll-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 /* ============================
    MOBILE RESPONSIVE (≤ 768px)
    ============================ */
@@ -681,10 +688,11 @@ h1, h2, h3, h4, h5, h6 {
   .hp-wrapper {
     height: auto !important;
     min-height: 100vh !important;
-    padding: 12px !important;
+    padding: 12px 12px 32px 12px !important;
     display: flex !important;
     flex-direction: column !important;
     overflow-y: auto !important;
+    gap: 12px !important;
   }
 
   .hp-user-bar {
@@ -693,11 +701,57 @@ h1, h2, h3, h4, h5, h6 {
     right: auto !important;
     width: 100% !important;
     display: flex !important;
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    margin-bottom: 12px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
     z-index: 10 !important;
     gap: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .hp-user-bar button {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
+  }
+
+  .hp-user-info-pill {
+    padding: 8px 12px !important;
+    max-width: 130px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+  }
+
+  .hp-user-info-pill span {
+    font-size: 11px !important;
+  }
+
+  /* Hide button text on mobile screens (max-width: 580px) to keep it compact */
+  @media (max-width: 580px) {
+    .hp-user-bar .btn-text {
+      display: none !important;
+    }
+    .hp-user-bar button {
+      padding: 10px !important;
+      border-radius: 50% !important;
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      justify-content: center !important;
+    }
+    .hp-user-info-pill {
+      max-width: 120px !important;
+      padding: 8px !important;
+    }
   }
 
   .hp-header {
@@ -706,13 +760,45 @@ h1, h2, h3, h4, h5, h6 {
     left: auto !important;
     transform: none !important;
     width: 100% !important;
-    margin-bottom: 16px !important;
-    padding: 12px 16px !important;
+    margin-bottom: 8px !important;
+    padding: 10px 16px !important;
     box-sizing: border-box !important;
   }
 
+  .hp-header h1 {
+    font-size: 1.5rem !important;
+  }
+
+  .hp-map-scroll-wrapper {
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(120, 110, 90, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    margin: 4px 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Thin elegant scrollbar for the map scroll wrapper */
+  .hp-map-scroll-wrapper::-webkit-scrollbar {
+    height: 4px !important;
+  }
+  .hp-map-scroll-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02) !important;
+  }
+  .hp-map-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.2) !important;
+    border-radius: 10px !important;
+  }
+
   .hp-map-container {
-    height: 380px !important;
+    width: 720px !important; /* Fixed width to prevent pin overlaps */
+    height: 460px !important;
+    border-radius: 0 !important;
+    border: none !important;
     flex-shrink: 0 !important;
   }
 
@@ -722,13 +808,35 @@ h1, h2, h3, h4, h5, h6 {
     left: auto !important;
     transform: none !important;
     width: 100% !important;
-    margin-top: 16px !important;
-    margin-bottom: 16px !important;
+    margin-top: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hp-mood-bar-inner {
+    padding: 10px 14px !important;
+    gap: 8px !important;
   }
 
   .hp-buddy-grid, .hp-mood-grid {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)) !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* Forces 3 columns so they don't break unevenly */
     gap: 8px !important;
+  }
+
+  .hp-buddy-grid button, .hp-mood-grid button {
+    padding: 8px 4px !important;
+    border-radius: 12px !important;
+  }
+
+  .hp-buddy-grid button span, .hp-mood-grid button span {
+    font-size: 11px !important;
+  }
+
+  .hp-modal-content {
+    padding: 20px !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
   }
 
   /* ── Login ── */
