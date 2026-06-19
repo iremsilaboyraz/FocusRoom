@@ -150,7 +150,17 @@ function HomePage({
                 <div className="hp-user-info-pill" style={styles.userInfoPill}>
                     <span style={{ fontSize: '14px' }}>👤</span>
                     <span style={styles.userEmail} title={user?.email}>
-                        {user?.email ? (user.email.length > 20 ? user.email.substring(0, 17) + '...' : user.email) : 'Misafir'}
+                        {user?.email ? (
+                            <>
+                                <span className="email-first-letter">{user.email.charAt(0).toUpperCase()}</span>
+                                <span className="email-rest">{user.email.substring(1)}</span>
+                            </>
+                        ) : (
+                            <>
+                                <span className="email-first-letter">M</span>
+                                <span className="email-rest">isafir</span>
+                            </>
+                        )}
                     </span>
                 </div>
                 <button 

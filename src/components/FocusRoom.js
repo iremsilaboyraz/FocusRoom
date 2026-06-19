@@ -963,7 +963,17 @@ Açıklama veya kod bloğu olmadan SADECE geçerli bir Türkçe JSON dizisi olar
 
                     <div className="user-info-pill" style={styles.userInfoPill}>
                         <span className="user-email-text" style={styles.userEmail} title={user?.email}>
-                            {user?.email ? (user.email.length > 15 ? user.email.substring(0, 12) + '...' : user.email) : 'Misafir'}
+                            {user?.email ? (
+                                <>
+                                    <span className="email-first-letter">{user.email.charAt(0).toUpperCase()}</span>
+                                    <span className="email-rest">{user.email.substring(1)}</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="email-first-letter">M</span>
+                                    <span className="email-rest">isafir</span>
+                                </>
+                            )}
                         </span>
                         <button 
                             onClick={onSignOut}

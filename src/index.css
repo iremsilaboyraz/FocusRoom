@@ -513,6 +513,10 @@ h1, h2, h3, h4, h5, h6 {
    ============================ */
 
 @media (max-width: 768px) and (orientation: portrait) {
+  .email-rest {
+    display: none !important;
+  }
+
   /* ── Toolbar Dock → Bottom Horizontal Bar ── */
   .toolbar-dock {
     position: fixed !important;
@@ -940,6 +944,10 @@ h1, h2, h3, h4, h5, h6 {
    LANDSCAPE MOBILE OPTIMIZATIONS (height ≤ 550px)
    =================================================== */
 @media (max-height: 550px) {
+  .email-rest {
+    display: none !important;
+  }
+
   /* ── Page Wrapper & Layout ── */
   .hp-wrapper {
     height: 100vh !important;
