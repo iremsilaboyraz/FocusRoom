@@ -401,7 +401,7 @@ function HomePage({
                     </div>
 
                     {/* Map legend / compass */}
-                    <div style={styles.compassBox}>
+                    <div className="hp-compass-box" style={styles.compassBox}>
                         <div style={{ fontSize: '28px', animation: 'char-idle 3s ease-in-out infinite' }}>🧭</div>
                         <span style={{ fontSize: '10px', color: '#64748b', fontWeight: '600', letterSpacing: '0.1em' }}>
                             ODAK HARİTASI

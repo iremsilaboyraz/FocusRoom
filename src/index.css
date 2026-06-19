@@ -505,7 +505,7 @@ h1, h2, h3, h4, h5, h6 {
    MOBILE RESPONSIVE (≤ 768px)
    ============================ */
 
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
   /* ── Toolbar Dock → Bottom Horizontal Bar ── */
   .toolbar-dock {
     position: fixed !important;
@@ -847,7 +847,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small phones (≤ 480px) — tighter spacing */
-@media (max-width: 480px) {
+@media (max-width: 480px) and (orientation: portrait) {
   .toolbar-dock {
     padding: 8px 8px env(safe-area-inset-bottom, 6px) !important;
     gap: 2px !important;
@@ -928,4 +928,190 @@ h1, h2, h3, h4, h5, h6 {
   0% { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* ===================================================
+   LANDSCAPE MOBILE OPTIMIZATIONS (height ≤ 550px)
+   =================================================== */
+@media (max-height: 550px) {
+  /* ── Page Wrapper & Layout ── */
+  .hp-wrapper {
+    height: 100vh !important;
+    overflow: hidden !important;
+    padding: 12px !important;
+  }
+
+  /* ── Header Title (Top Left) ── */
+  .hp-header {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    align-items: flex-start !important;
+  }
+
+  .hp-header h1 {
+    font-size: 1.25rem !important;
+  }
+
+  .hp-header p {
+    display: none !important; /* Hide subtitle to save vertical space */
+  }
+
+  /* ── User Bar (Top Right) ── */
+  .hp-user-bar {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    margin: 0 !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .hp-user-bar .btn-text {
+    display: none !important; /* Hide button text to prevent overlaps */
+  }
+
+  .hp-user-bar button {
+    padding: 8px !important;
+    border-radius: 50% !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    justify-content: center !important;
+  }
+
+  .hp-user-info-pill {
+    padding: 6px 10px !important;
+    max-width: 120px !important;
+    border-radius: 12px !important;
+  }
+
+  .hp-user-info-pill span {
+    font-size: 11px !important;
+  }
+
+  /* ── Map Wrapper & Panning ── */
+  .hp-map-scroll-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-shadow: 0 10px 30px rgba(120, 110, 90, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .hp-map-container {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 680px !important; /* Prevents pin overlaps on narrow screens */
+    border-radius: 0 !important;
+    border: none !important;
+  }
+
+  /* Hide compass box to save space */
+  .hp-compass-box {
+    display: none !important;
+  }
+
+  /* ── AI Mood Bar (Bottom Center) ── */
+  .hp-mood-bar {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 75% !important;
+    max-width: 480px !important;
+    margin: 0 !important;
+  }
+
+  .hp-mood-bar-inner {
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+  }
+
+  .hp-mood-bar-inner input {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+  }
+
+  .hp-mood-bar-inner button {
+    padding: 8px 14px !important;
+    font-size: 11px !important;
+  }
+
+  /* ── Setup Modal ── */
+  .hp-modal-content {
+    padding: 16px 20px !important;
+    gap: 12px !important;
+    width: 95% !important;
+    max-width: 460px !important;
+    max-height: 95vh !important;
+  }
+
+  .hp-modal-content h2 {
+    font-size: 16px !important;
+  }
+
+  .hp-modal-content p {
+    font-size: 11px !important;
+  }
+
+  .hp-modal-content .hp-buddy-grid, 
+  .hp-modal-content .hp-mood-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .hp-modal-content .hp-buddy-grid button, 
+  .hp-modal-content .hp-mood-grid button {
+    padding: 6px 4px !important;
+    border-radius: 10px !important;
+  }
+
+  .hp-modal-content .hp-buddy-grid button span, 
+  .hp-modal-content .hp-mood-grid button span {
+    font-size: 10px !important;
+  }
+
+  /* ── Workspace Page (FocusRoom.js) Landscape Fixes ── */
+  .workspace-header {
+    top: 12px !important;
+    left: 12px !important;
+  }
+
+  .workspace-badge-wrapper {
+    padding: 6px 12px !important;
+  }
+
+  .toolbar-dock {
+    right: 12px !important;
+    padding: 10px 8px !important;
+    gap: 8px !important;
+  }
+
+  .dock-icon-btn {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+  }
+
+  .active-widget-panel {
+    right: 70px !important;
+    width: 270px !important;
+    max-height: 90vh !important;
+  }
+}
+
 
