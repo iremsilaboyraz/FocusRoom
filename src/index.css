@@ -501,6 +501,13 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
+/* HP Modal Sections Container */
+.hp-modal-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 /* ============================
    MOBILE RESPONSIVE (≤ 768px)
    ============================ */
@@ -1056,8 +1063,16 @@ h1, h2, h3, h4, h5, h6 {
     padding: 16px 20px !important;
     gap: 12px !important;
     width: 95% !important;
-    max-width: 460px !important;
+    max-width: 500px !important; /* Slightly wider modal in landscape to fit columns */
     max-height: 95vh !important;
+    overflow-y: auto !important; /* Allow scroll if screen is extremely short */
+  }
+
+  .hp-modal-sections-container {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Side-by-side grids in landscape */
+    gap: 16px !important;
+    width: 100% !important;
   }
 
   .hp-modal-content h2 {

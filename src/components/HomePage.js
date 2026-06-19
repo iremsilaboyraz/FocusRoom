@@ -451,67 +451,70 @@ function HomePage({
                         
                         <p style={styles.modalSubtitle}>Odaklanma seansına başlamadan önce çalışma arkadaşını ve modunu seç!</p>
                         
-                        {/* Focus Buddy Choice */}
-                        <div style={styles.sectionContainer}>
-                            <span style={styles.sectionLabel}>🐶 Focus Buddy AI Seçimi</span>
-                            <div className="hp-buddy-grid" style={styles.buddyGrid}>
-                                {[
-                                    { type: 'shiba', label: 'Shiba 🐶', desc: 'Neşeli Shiba' },
-                                    { type: 'panda', label: 'Panda 🐼', desc: 'Sakin Panda' },
-                                    { type: 'kitty', label: 'Kitty 🐱', desc: 'Sevimli Kedi' }
-                                ].map(b => (
-                                    <button
-                                        key={b.type}
-                                        onClick={() => setBuddyType(b.type)}
-                                        style={{
-                                            ...styles.buddyCard,
-                                            border: '2px solid',
-                                            borderColor: buddyType === b.type ? '#8b5cf6' : 'rgba(0,0,0,0.06)',
-                                            backgroundColor: buddyType === b.type ? 'rgba(139, 92, 246, 0.08)' : 'rgba(255,255,255,0.6)',
-                                        }}
-                                    >
-                                        <span style={{ fontSize: '24px' }}>{b.type === 'shiba' ? '🐶' : b.type === 'panda' ? '🐼' : '🐱'}</span>
-                                        <span style={{ fontSize: '13px', fontWeight: '700', color: '#1e293b' }}>{b.label}</span>
-                                        <span style={{ fontSize: '10px', color: '#64748b' }}>{b.desc}</span>
-                                    </button>
-                                ))}
+                        {/* Wrapper for side-by-side columns in landscape */}
+                        <div className="hp-modal-sections-container">
+                            {/* Focus Buddy Choice */}
+                            <div style={styles.sectionContainer}>
+                                <span style={styles.sectionLabel}>🐶 Focus Buddy AI Seçimi</span>
+                                <div className="hp-buddy-grid" style={styles.buddyGrid}>
+                                    {[
+                                        { type: 'shiba', label: 'Shiba 🐶', desc: 'Neşeli Shiba' },
+                                        { type: 'panda', label: 'Panda 🐼', desc: 'Sakin Panda' },
+                                        { type: 'kitty', label: 'Kitty 🐱', desc: 'Sevimli Kedi' }
+                                    ].map(b => (
+                                        <button
+                                            key={b.type}
+                                            onClick={() => setBuddyType(b.type)}
+                                            style={{
+                                                ...styles.buddyCard,
+                                                border: '2px solid',
+                                                borderColor: buddyType === b.type ? '#8b5cf6' : 'rgba(0,0,0,0.06)',
+                                                backgroundColor: buddyType === b.type ? 'rgba(139, 92, 246, 0.08)' : 'rgba(255,255,255,0.6)',
+                                            }}
+                                        >
+                                            <span style={{ fontSize: '24px' }}>{b.type === 'shiba' ? '🐶' : b.type === 'panda' ? '🐼' : '🐱'}</span>
+                                            <span style={{ fontSize: '13px', fontWeight: '700', color: '#1e293b' }}>{b.label}</span>
+                                            <span style={{ fontSize: '10px', color: '#64748b' }}>{b.desc}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                                
+                                <div style={styles.toggleRow}>
+                                    <span style={{ fontSize: '12px', color: '#475569', fontWeight: '500' }}>Focus Buddy ekranda gözüksün mü?</span>
+                                    <input 
+                                        type="checkbox" 
+                                        checked={buddyActive} 
+                                        onChange={(e) => setBuddyActive(e.target.checked)}
+                                        style={styles.checkbox}
+                                    />
+                                </div>
                             </div>
-                            
-                            <div style={styles.toggleRow}>
-                                <span style={{ fontSize: '12px', color: '#475569', fontWeight: '500' }}>Focus Buddy ekranda gözüksün mü?</span>
-                                <input 
-                                    type="checkbox" 
-                                    checked={buddyActive} 
-                                    onChange={(e) => setBuddyActive(e.target.checked)}
-                                    style={styles.checkbox}
-                                />
-                            </div>
-                        </div>
 
-                        {/* Pomodoro Timer / Mood Choice */}
-                        <div style={styles.sectionContainer}>
-                            <span style={styles.sectionLabel}>⚡ Çalışma Modu & Pomodoro Süresi</span>
-                            <div className="hp-mood-grid" style={styles.moodGrid}>
-                                {[
-                                    { id: 'full', label: 'Enerji Dolu 🚀', focus: 50, break: 10, desc: 'Derin ve uzun odak seansı' },
-                                    { id: 'distracted', label: 'Dağınık 🌪️', focus: 25, break: 5, desc: 'Gemini ile 3 alt adıma böl' },
-                                    { id: 'tired', label: 'Çok Yorgun 💤', focus: 15, break: 5, desc: 'Yavaş mikro seanslar' }
-                                ].map(m => (
-                                    <button
-                                        key={m.id}
-                                        onClick={() => setUserMood(m.id)}
-                                        style={{
-                                            ...styles.moodCard,
-                                            border: '2px solid',
-                                            borderColor: userMood === m.id ? '#8b5cf6' : 'rgba(0,0,0,0.06)',
-                                            backgroundColor: userMood === m.id ? 'rgba(139, 92, 246, 0.08)' : 'rgba(255,255,255,0.6)',
-                                        }}
-                                    >
-                                        <span style={{ fontSize: '13px', fontWeight: '700', color: '#1e293b' }}>{m.label}</span>
-                                        <span style={{ fontSize: '11px', color: '#8b5cf6', fontWeight: '700', margin: '4px 0' }}>{m.focus}dk Odak / {m.break}dk Mola</span>
-                                        <span style={{ fontSize: '10px', color: '#64748b', textAlign: 'center' }}>{m.desc}</span>
-                                    </button>
-                                ))}
+                            {/* Pomodoro Timer / Mood Choice */}
+                            <div style={styles.sectionContainer}>
+                                <span style={styles.sectionLabel}>⚡ Çalışma Modu & Pomodoro Süresi</span>
+                                <div className="hp-mood-grid" style={styles.moodGrid}>
+                                    {[
+                                        { id: 'full', label: 'Enerji Dolu 🚀', focus: 50, break: 10, desc: 'Derin ve uzun odak seansı' },
+                                        { id: 'distracted', label: 'Dağınık 🌪️', focus: 25, break: 5, desc: 'Gemini ile 3 alt adıma böl' },
+                                        { id: 'tired', label: 'Çok Yorgun 💤', focus: 15, break: 5, desc: 'Yavaş mikro seanslar' }
+                                    ].map(m => (
+                                        <button
+                                            key={m.id}
+                                            onClick={() => setUserMood(m.id)}
+                                            style={{
+                                                ...styles.moodCard,
+                                                border: '2px solid',
+                                                borderColor: userMood === m.id ? '#8b5cf6' : 'rgba(0,0,0,0.06)',
+                                                backgroundColor: userMood === m.id ? 'rgba(139, 92, 246, 0.08)' : 'rgba(255,255,255,0.6)',
+                                            }}
+                                        >
+                                            <span style={{ fontSize: '13px', fontWeight: '700', color: '#1e293b' }}>{m.label}</span>
+                                            <span style={{ fontSize: '11px', color: '#8b5cf6', fontWeight: '700', margin: '4px 0' }}>{m.focus}dk Odak / {m.break}dk Mola</span>
+                                            <span style={{ fontSize: '10px', color: '#64748b', textAlign: 'center' }}>{m.desc}</span>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                         
